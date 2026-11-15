@@ -1,0 +1,579 @@
+/*
+ * styles.css — كل أشكال اللعبة والشهادة في ملف واحد مستقل عن JavaScript.
+ * لتغيير لون اللعبة: عدّلي المتغيرات التي تبدأ بـ -- داخل :root.
+ * شكل خريطة المدينة: ابحثي عن «الخريطة».
+ * حجم وحركة درة: ابحثي عن «الشخصية درة».
+ * تصميم الشهادة: ابحثي عن «الشهادة — تصميم باستيل» أسفل الملف.
+ * أما رسم وجه درة نفسه (العيون والعباءة والابتسامة) ففي mascot.js.
+ */
+:root{--pink:#ff5fa2;--purple:#7c5cff;--teal:#14c2b0;--yellow:#ffc933;--orange:#ff8a3d;--green:#1fa64a;--ink:#3b2a63;--soft:#f6f0ff}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{font-family:'Cairo',Tahoma,Arial,sans-serif;color:var(--ink);min-height:100vh;
+ background:linear-gradient(180deg,#fff3d6 0%,#ffeede 55%,#e8f7e9 100%) fixed;font-size:17px;line-height:1.7}
+#app{max-width:1000px;margin:0 auto;padding:14px 14px 60px}
+button{font-family:inherit}
+svg text{font-family:'Cairo',Tahoma,Arial,sans-serif}
+
+/* شريط التقدم العلوي */
+#topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(6px);
+ box-shadow:0 4px 18px rgba(124,92,255,.18);padding:8px 12px;border-radius:0 0 22px 22px;max-width:1000px;margin:0 auto}
+.tb-row{display:flex;align-items:center;gap:10px}
+.chip{background:var(--soft);border-radius:999px;padding:2px 12px;font-weight:800;white-space:nowrap;font-size:.95rem}
+.bar{flex:1;height:26px;background:#eadfff;border-radius:999px;position:relative;overflow:hidden;min-width:90px}
+.bar i{position:absolute;inset:0 0 0 auto;width:0;background:linear-gradient(270deg,#b79cff,#7c5cff);border-radius:999px;transition:width .6s}
+.bar b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.85rem;color:#2d1d57;text-shadow:0 0 4px #fff}
+.ico{border:0;background:var(--soft);border-radius:50%;width:38px;height:38px;font-size:1.1rem;cursor:pointer}
+#path{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:4px}
+#path i{width:26px;height:4px;background:#e2d6ff;border-radius:4px}
+.pn{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:#eee;filter:grayscale(1);opacity:.55;font-size:1.1rem}
+.pn.cur{filter:none;opacity:1;background:#fff3c4;box-shadow:0 0 0 3px var(--yellow)}
+.pn.done{filter:none;opacity:1;background:#d8ffe9;box-shadow:0 0 0 3px #38c981}
+
+/* بطاقات عامة */
+.card{background:#fff;border-radius:28px;padding:22px;box-shadow:0 10px 30px rgba(124,92,255,.18);margin-top:14px;animation:in .45s}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+h1{font-size:2rem;margin:.1em 0;text-align:center;font-weight:900;background:linear-gradient(90deg,var(--pink),var(--purple),var(--teal));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{margin:.2em 0;text-align:center;font-weight:900}
+.btn{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;border:0;border-radius:999px;padding:13px 30px;font-weight:800;font-size:1.15rem;
+ box-shadow:0 6px 0 #5a3fd0;cursor:pointer;display:block;margin:18px auto 6px;transition:transform .1s,box-shadow .1s}
+.btn:active{transform:translateY(5px);box-shadow:0 1px 0 #5a3fd0}
+.btn:disabled{background:#cfc8e0;box-shadow:0 6px 0 #aaa2c3;cursor:not-allowed}
+.btn.alt{background:linear-gradient(135deg,var(--teal),#3aa0ff);box-shadow:0 6px 0 #1b86a8}
+.btn.sm{font-size:1rem;padding:9px 22px;display:inline-block;margin:6px}
+.note{font-size:.88rem;text-align:center;color:#7d6fa3;margin:10px 0 0}
+.sadu{height:12px;border-radius:8px;background:repeating-linear-gradient(135deg,#e8403f 0 7px,#fff 7px 10px,#1f1f3a 10px 13px,#ffc933 13px 17px,#1fa64a 17px 21px);margin:0 0 10px}
+
+/* الشخصية درة */
+.guide{display:flex;gap:12px;align-items:center;margin:12px 0}
+.mascot{width:104px;height:104px;flex:none;animation:bob 2.4s ease-in-out infinite;overflow:visible}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.bubble{background:var(--soft);border-radius:22px 22px 22px 6px;padding:14px 18px;font-weight:600;flex:1}
+.hero-m{display:block;margin:4px auto;width:150px;height:150px}
+
+/* شاشة البداية */
+label,.lab{display:block;font-weight:800;margin:16px 0 6px}
+input[type=text]{width:100%;font:700 1.2rem 'Cairo';padding:12px 16px;border-radius:18px;border:3px solid #e3d7ff;outline:none;color:var(--ink)}
+input[type=text]:focus{border-color:var(--purple)}
+.gl{font-weight:800;color:var(--purple);margin:8px 0 4px}
+.grades{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.g{border:3px solid #e3d7ff;background:#fff;border-radius:18px;padding:12px 4px;font-weight:800;font-size:1.05rem;cursor:pointer;color:var(--ink)}
+.g.sel{background:linear-gradient(135deg,var(--yellow),var(--orange));border-color:var(--orange);transform:scale(1.04)}
+.resume{background:#e9fff6;border:3px dashed #38c981;border-radius:20px;padding:12px;text-align:center;margin:10px 0}
+
+/* الخريطة */
+.mapcard{margin-top:12px;border-radius:34px;overflow:hidden;box-shadow:0 16px 40px rgba(0,120,200,.18);border:6px solid #fff;background:linear-gradient(180deg,#baf3f2 0%,#6ed4e8 100%)}
+.mapcard svg{display:block;width:100%;height:auto}
+.cartoon-map{position:relative}
+.map-title{text-align:center;margin:10px 0 0}
+.map-title h2{font-size:1.7rem}
+.map-title p{margin:0;font-weight:700;color:#534576}
+.plot{cursor:pointer;outline:none}
+.plot.locked{cursor:not-allowed}
+.plot .hit{pointer-events:auto}
+.plot .pl-in{transition:none}
+.plot.shake .pl-in{animation:shake .45s}
+.plot:focus-visible .pl-in{filter:drop-shadow(0 0 0 rgba(0,0,0,0))}
+.cloud-s{animation:none}
+.blink{animation:none}
+.stlist{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px}
+.stbtn{border:0;border-radius:999px;padding:7px 14px;font-weight:800;font-size:.92rem;cursor:pointer;background:#fff;color:var(--ink);box-shadow:0 3px 0 #d9cdf5}
+.stbtn.current{background:var(--yellow);box-shadow:0 3px 0 #d99a00}
+.stbtn.done{background:#d8ffe9;box-shadow:0 3px 0 #38c981}
+.stbtn.locked{background:#ece8f4;color:#8a809f;box-shadow:0 3px 0 #cfc8e0}
+
+/* القطع المبنية في المدينة */
+.spot .dc{display:none;transform-box:fill-box;transform-origin:50% 100%}
+.spot.on .dc{display:inline}
+.spot.on .ghost{display:none}
+.spot.pop .dc{animation:pop2 .9s}
+@keyframes pop2{0%{transform:scale(0) rotate(-20deg)}55%{transform:scale(1.4) rotate(6deg)}100%{transform:scale(1)}}
+
+/* المحطة */
+.st-head{display:inline-block;background:var(--c);color:#fff;border-radius:999px;padding:4px 20px;font-weight:900;font-size:1.2rem}
+.mini{display:block;margin:2px auto 0;width:min(330px,86%);height:auto;overflow:visible}
+.dots{display:flex;gap:8px;justify-content:center;margin:6px 0}
+.dots i{width:14px;height:14px;border-radius:50%;background:#e3d7ff}
+.dots i.on{background:var(--teal)}.dots i.now{background:var(--yellow);box-shadow:0 0 0 3px #fff0a8}
+.qtext{font-size:1.25rem;font-weight:800;margin:10px 0 14px}
+.opt{display:block;width:100%;text-align:right;background:#fff;border:3px solid #e3d7ff;border-radius:20px;padding:13px 16px;margin:10px 0;font-weight:700;font-size:1.08rem;cursor:pointer;color:var(--ink);transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--purple);background:var(--soft)}
+.opt.right{background:#d8ffe9;border-color:#38c981}
+.opt.wrong{background:#ffe3e3;border-color:#ff7b7b;animation:shake .4s}
+@keyframes shake{25%{transform:translateX(8px)}75%{transform:translateX(-8px)}}
+.fb{border-radius:20px;padding:12px 16px;margin-top:10px;font-weight:700}
+.fb.good{background:#e9fff2;border:3px solid #38c981}
+.fb.bad{background:#fff3e0;border:3px solid var(--orange)}
+.speak{border:0;background:var(--soft);color:var(--purple);font-weight:800;border-radius:999px;padding:6px 16px;cursor:pointer;font-size:.95rem}
+.done-box{text-align:center}
+.gift{font-size:8rem;text-align:center;cursor:pointer;animation:wob 1.2s infinite;user-select:none}
+@keyframes wob{25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+#toast{position:fixed;bottom:26px;left:50%;transform:translate(-50%,40px);background:#3b2a63;color:#fff;font-weight:800;border-radius:999px;padding:12px 22px;opacity:0;transition:.3s;z-index:60;pointer-events:none;max-width:92vw;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* المؤثرات */
+.fxi{position:fixed;top:-40px;font-size:26px;pointer-events:none;z-index:99;animation:fall 2.6s linear forwards}
+@keyframes fall{to{transform:translateY(112vh) rotate(420deg)}}
+.burst{position:fixed;font-size:24px;pointer-events:none;z-index:99;animation:bst .9s ease-out forwards}
+@keyframes bst{to{transform:translate(var(--dx),var(--dy)) scale(1.6);opacity:0}}
+
+.why{margin-top:6px;font-weight:600;line-height:1.9}
+
+.react{display:flex;gap:10px;align-items:center}
+.react .mascot{width:125px;height:125px;flex:none}
+.r-happy{animation:hop2 .9s ease-out}@keyframes hop2{30%{transform:translateY(-16px) rotate(-5deg)}60%{transform:translateY(0)}80%{transform:translateY(-5px)}}
+.r-sad{animation:sadsway 1.3s ease-in-out}@keyframes sadsway{25%{transform:rotate(-5deg) translateY(5px)}75%{transform:rotate(5deg) translateY(5px)}}
+.ayah{display:block;font-family:'Amiri Quran','Scheherazade New','Traditional Arabic',serif;font-size:1.6rem;text-align:center;background:#fffaf0;border:2px solid #d9b95b;border-radius:14px;padding:10px 12px;margin:8px 0;color:#1f3a2e;line-height:2.2}
+
+@media(max-width:520px){
+ body{font-size:16px}h1{font-size:1.6rem}.mascot{width:78px;height:78px}.cert{border-radius:8px}.card{padding:16px}
+}
+
+
+/* ===================================================================
+   الشهادة — تصميم باستيل مستوحى من مرجع المستخدمة (رسم برمجي وليس صورة).
+   كل جزء من هذه الزخارف قابل للتعديل هنا في CSS، دون تغيير HTML/JS.
+   المقاس 297:210 ليطبع على ورقة A4 أفقية، وcqw يساوي 1% من عرض الشهادة.
+   =================================================================== */
+.cert-wrap { margin-top:14px; }
+/* خلفية الورقة: ألوان وردية وبنفسجية هادئة */
+.cert {
+  container-type:inline-size;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  width:100%;
+  aspect-ratio:297 / 210;
+  border-radius:2cqw;
+  background:
+    radial-gradient(ellipse at 2% 85%,rgba(255,197,217,.90),transparent 27%),
+    radial-gradient(ellipse at 89% 11%,rgba(184,161,248,.70),transparent 37%),
+    radial-gradient(ellipse at 73% 94%,rgba(201,244,245,.88),transparent 40%),
+    linear-gradient(135deg,#f9f5ff,#e7daf8 42%,#ffebef 76%,#f2e8ff);
+  box-shadow:0 12px 34px rgba(95,69,141,.18);
+}
+/* الطبقة البيضاء الوسطى + إطارها الناعم */
+.cert-panel {
+  position:absolute;
+  inset:7.5% 5% 9% 5%;
+  background:#fff;
+  border-radius:2.1cqw;
+  box-shadow:0 1cqw 2.6cqw rgba(113,93,160,.12);
+  z-index:2;
+  padding:2.8cqw 3.2cqw;
+}
+/* خط بنفسجي متقطع مثل الصورة المرفقة */
+.cert-in {
+  width:100%;height:100%;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:space-between;
+  gap:.52cqw;
+  padding:2.2cqw 4cqw 2cqw;
+  text-align:center;
+  border:.20cqw dashed #ded2f8;
+  border-radius:1.7cqw;
+  position:relative;
+}
+/* اسم المدرسة، يوضع بحجم أصغر حتى تبقى الشهادة مرتبة */
+.c-top {
+  color:#473b50;
+  font-size:1.95cqw;
+  font-weight:700;
+  line-height:1.55;
+}
+/* عنوان الشهادة بخط عربي ذي طابع خطّي (أميري عند توفره) */
+.c-title {
+  font-family:'Noto Kufi Arabic','Cairo',Tahoma,Arial,sans-serif;
+  font-size:5.35cqw;
+  font-weight:900;
+  color:#272127;
+  line-height:1.15;
+  letter-spacing:0;
+  text-shadow:0 .15cqw .1cqw rgba(50,33,61,.06);
+}
+/* نص المقدمة، الصف والنص الخاص بعدد النجوم */
+.c-p {
+  font-size:2.02cqw;
+  font-weight:600;
+  margin:0;
+  line-height:1.65;
+  color:#34303b;
+  max-width:83%;
+}
+/* الاسم هو العنصر البنفسجي البارز، مع استيعاب الأسماء الطويلة */
+.c-name {
+  font-size:clamp(12px,3.75cqw,53px);
+  font-weight:900;
+  color:#9480d0;
+  line-height:1.28;
+  max-width:87%;
+  overflow-wrap:anywhere;
+}
+.c-grade { color:#7e68bb;font-size:1.94cqw; }
+.c-achievement { max-width:79%;font-size:1.95cqw;line-height:1.65; }
+/* التواقيع: من اليمين المديرة، في المنتصف التاريخان، إلى اليسار الوكيلة */
+.c-foot {
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr 1.08fr 1fr;
+  align-items:end;
+  gap:.7cqw;
+  font-size:1.68cqw;
+  color:#494252;
+  line-height:1.5;
+  margin-top:.3cqw;
+}
+.c-sign {display:flex;flex-direction:column;align-items:center;gap:.1cqw;}
+.c-sign b {font-size:1.54cqw;font-weight:700;}
+.c-sign span {font-size:1.76cqw;font-weight:800;color:#8970c0;}
+.c-date {font-size:1.53cqw;color:#5b5365;line-height:1.5;}
+/* قوس قزح بأربع طبقات مقوسة في الزاوية العليا اليمنى */
+.cert-rainbow {
+  position:absolute;
+  top:-24%;right:-4%;
+  width:52%;height:60%;
+  z-index:1;
+  transform:rotate(-12deg);
+}
+.cert-rainbow i {
+  position:absolute;
+  display:block;
+  border-radius:50%;
+  inset:0;
+  border:4.4cqw solid rgba(255,181,211,.66);
+}
+.cert-rainbow i:nth-child(2) {inset:4cqw;border-color:rgba(194,157,238,.73);}
+.cert-rainbow i:nth-child(3) {inset:8cqw;border-color:rgba(176,222,250,.77);}
+.cert-rainbow i:nth-child(4) {inset:12cqw;border-color:rgba(255,226,194,.8);}
+/* بالونات الشهادة المتجهة: لا تمدد ولا انحناءات CSS مشوهة، ومقاسها متناسب مع الورقة. */
+.cert-balloons{
+  position:absolute;
+  width:14.5%;height:45%;right:0.5%;top:7.5%;
+  z-index:4;pointer-events:none;overflow:visible;
+  filter:drop-shadow(0 .25cqw .4cqw rgba(162,118,156,.10));
+}
+/* الغيوم الوردية والحليبية أسفل اليسار، مع نقاط ضوء صغيرة */
+.cert-clouds {position:absolute;left:-13%;bottom:-18%;width:29%;height:32%;z-index:4;pointer-events:none;}
+.cert-clouds i {position:absolute;display:block;border-radius:52%;filter:drop-shadow(0 .3cqw .4cqw rgba(194,140,193,.12));}
+.cert-clouds i:nth-child(1) {left:0;bottom:3%;width:58%;height:76%;background:radial-gradient(circle at 50% 24%,#fffefd 0%,#f7ddec 46%,#eac9ee 100%);}
+.cert-clouds i:nth-child(2) {left:25%;bottom:4%;width:53%;height:99%;background:radial-gradient(circle at 33% 24%,#fff,#f8cfda 56%,#f2b9da);}
+.cert-clouds i:nth-child(3) {left:51%;bottom:2%;width:48%;height:70%;background:radial-gradient(circle at 35% 22%,#fffdfd,#d9e6fb 56%,#f7b7d8);}
+.cert-clouds i:nth-child(4) {left:-1%;bottom:-7%;width:103%;height:46%;background:linear-gradient(95deg,#f4d8ef,#fbdaf1,#dff7fc);}
+/* نجوم باستيلية تشبه النجمة المحببة في مرجع الشهادة */
+.cert-star {position:absolute;z-index:5;color:#ffe49c;text-shadow:.25cqw .2cqw .12cqw #f7bdd5,-.15cqw -.18cqw .12cqw #fff;line-height:1;pointer-events:none;}
+.star-large {left:4%;bottom:1%;font-size:10cqw;transform:rotate(-11deg);}
+.star-small {left:15%;bottom:9%;font-size:4.2cqw;color:#9be6d7;transform:rotate(14deg);}
+.star-upper {right:14%;top:22%;font-size:3.9cqw;color:#ffe17b;transform:rotate(-22deg);}
+/* للصورة المستطيلة أعلى كل سؤال، حتى قبل إضافة ملفات الصور */
+.question-art {
+  width:min(100%,680px);
+  aspect-ratio:16 / 9;
+  position:relative;
+  overflow:hidden;
+  border:3px dashed #d6bfe9;
+  border-radius:23px;
+  margin:16px auto 12px;
+  background:linear-gradient(135deg,#f9edff 0%,#fdf7f8 50%,#ecf6ff 100%);
+  box-shadow:inset 0 0 24px rgba(184,151,217,.08);
+  display:flex;align-items:center;justify-content:center;
+}
+.question-art img {
+  /* صور الأسئلة الآن ملفات 1920×1080 بنفس نسبة مساحة السؤال (16:9). */
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;
+}
+.question-art.has-image {border:0;background:#fff;}
+.question-art.has-image .question-art-placeholder {display:none;}
+.question-art-placeholder {text-align:center;color:#79649b;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:12px;}
+.art-icon {font-size:3.3rem;line-height:1;color:#b28ed5;}
+.question-art-placeholder strong {font-size:1rem;}
+.question-art-placeholder span:not(.art-icon) {font-size:.87rem;}
+.question-art-placeholder code {font-size:.87rem;color:#584377;background:#fff;border:1px solid #e4d7ff;border-radius:8px;padding:2px 10px;direction:ltr;}
+/* الطباعة: نظهر فقط الشهادة نفسها بكامل ألوانها ودون أزرار اللعبة */
+@media print {
+  @page {size:A4 landscape;margin:0;}
+  body {background:#fff!important;margin:0!important;}
+  .noprint,#topbar,#fx,#toast {display:none!important;}
+  #app {max-width:none!important;padding:0!important;margin:0!important;}
+  .cert-wrap {margin:0!important;}
+  .cert {box-shadow:none!important;border-radius:0!important;width:297mm!important;height:210mm!important;aspect-ratio:auto!important;}
+  * {-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+
+
+/* =====================================================================
+   خريطة مرسومة داخل إطار أبيض؛ مبنى ملون/رمادي فقط، لا مستطيلات أو دوائر.
+   ===================================================================== */
+body.map-mode{background:linear-gradient(180deg,#fff3d6 0%,#ffeede 55%,#e8f7e9 100%) fixed}
+body.map-mode #app{max-width:1120px;width:100%;margin:0 auto;padding:14px 14px 50px}
+body.map-mode #topbar{display:none!important}
+.map-screen{width:100%}
+.illustrated-game-map{width:100%;position:relative;aspect-ratio:1549/1015;overflow:hidden;
+  border-radius:34px;border:6px solid #fff;box-shadow:0 14px 40px rgba(73,70,119,.18);
+  background:#f7fff5;isolation:isolate}
+.map-painted-background{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;pointer-events:none;user-select:none}
+.map-star-count{position:absolute;right:3.4%;top:3.2%;min-width:146px;height:56px;display:flex;
+  align-items:center;justify-content:center;gap:10px;z-index:12;direction:ltr;white-space:nowrap;
+  color:#35235e;font:900 clamp(14px,2vw,25px) 'Cairo',Tahoma,sans-serif;background:#fff4ff;
+  border:2px solid #e6caf8;border-radius:999px;box-shadow:0 4px 0 #c79ae8}
+.star-mark{color:#ffbe22;-webkit-text-stroke:1px #eb9200;font-size:1.45em}
+
+/* كل مرحلة زر كامل: مبنى + اسم */
+.map-node{position:absolute;z-index:6;display:flex;flex-direction:column;align-items:center;gap:8px;
+  transform-origin:center top;appearance:none;background:transparent;border:0;padding:0;cursor:pointer;
+  transition:transform .16s ease, filter .16s ease}
+.map-node .node-art-wrap{width:100%;display:flex;justify-content:center;align-items:flex-end;min-height:124px}
+.map-node .node-art{width:100%;height:auto;display:block;pointer-events:none;
+  filter:drop-shadow(0 12px 10px rgba(54,50,78,.19));transition:transform .18s ease, filter .18s ease, opacity .18s ease}
+.map-node .node-label-wrap{min-width:76%;max-width:112%;display:flex;align-items:center;justify-content:center;gap:8px;
+  background:linear-gradient(180deg,#fffef7 0%,#fff3d7 100%);border:3px solid color-mix(in srgb, var(--stage) 72%, #f2b55d 28%);
+  border-radius:20px;padding:8px 16px;box-shadow:0 6px 0 color-mix(in srgb, var(--stage) 68%, #d08a28 32%), 0 10px 18px rgba(90,72,120,.16);
+  color:#3d2b63;pointer-events:none}
+.map-node .node-stage-index{flex:0 0 auto;min-width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
+  background:linear-gradient(180deg,color-mix(in srgb, var(--stage) 82%, #fff 18%) 0%, var(--stage) 100%);
+  box-shadow:0 3px 0 rgba(88,58,110,.22);color:#fff;font-weight:900;font-size:1.22rem;line-height:1}
+.map-node .node-label{font-weight:900;font-size:clamp(1rem,1.45vw,1.65rem);line-height:1.15}
+.map-node.treasure-node .node-label-wrap{padding-inline:18px 20px}
+.map-node.treasure-node .node-label{font-size:clamp(.98rem,1.38vw,1.45rem)}
+
+/* حالات المراحل */
+.map-node.locked .node-art{filter:drop-shadow(0 8px 8px rgba(41,39,56,.18));opacity:.98}
+.map-node.current .node-art{filter:brightness(1.06) saturate(1.08) drop-shadow(0 10px 10px rgba(70,52,98,.18)) drop-shadow(0 0 12px rgba(255,220,97,.86))}
+.map-node.done .node-art{filter:brightness(1.02) saturate(1.03) drop-shadow(0 10px 10px rgba(70,52,98,.18))}
+.map-node.current .node-label-wrap{box-shadow:0 6px 0 color-mix(in srgb, var(--stage) 68%, #d08a28 32%), 0 0 0 4px rgba(255,233,132,.55), 0 12px 20px rgba(86,67,118,.18)}
+.map-node:hover,.map-node:focus-visible{transform:translateY(-4px) scale(1.028)}
+.map-node:hover .node-art,.map-node:focus-visible .node-art{transform:translateY(-3px)}
+.map-node:active{transform:translateY(1px) scale(.988)}
+.map-node:focus-visible{outline:3px dashed #fff7c1;outline-offset:2px;border-radius:22px}
+.map-node.shake{animation:shake .45s}
+
+.map-instructions{font-weight:800;text-align:center;color:#644c82;margin:12px auto 0}
+.map-treasure.locked img{filter:drop-shadow(0 8px 8px rgba(41,39,56,.18));opacity:.98}
+@keyframes dorra-sway{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+.mascot{width:154px;height:182px;flex-shrink:0;overflow:visible;animation:dorra-sway 6s ease-in-out infinite}
+.hero-m{display:block;margin:4px auto;width:min(250px,70vw);height:292px}
+.answer-symbol{width:92px;height:92px;display:inline-grid;place-items:center;flex-shrink:0}
+.answer-symbol svg{width:100%;height:100%;display:block}
+.stage-artwork{width:min(420px,90%);height:280px;margin:16px auto 8px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(180deg,#f8ffef,#fff9ee);border-radius:24px;border:2px solid #e9e3ff}
+.stage-artwork img{height:94%;max-width:96%;object-fit:contain;filter:drop-shadow(0 10px 8px rgba(89,76,101,.22))}
+.station-celebration{width:clamp(145px,24vw,260px);height:310px;display:block;margin:16px auto}
+.celebration-note{font-weight:900;color:#6e4a9e}
+@media(max-width:700px){
+  body.map-mode #app{padding:8px 5px 30px}
+  .illustrated-game-map{border-width:4px;border-radius:18px}
+  .map-star-count{right:3%;top:2.8%;min-width:108px;height:44px;font-size:.95rem}
+  /* الهاتف: تصغير زر المرحلة نفسه مع الخريطة؛ كي لا تُقصّ الأسماء في أسفلها. */
+  .map-node{gap:2px}
+  .map-node .node-art-wrap{min-height:0}
+  .map-node .node-label-wrap{padding:3px 5px;border-width:1.5px;border-radius:8px;gap:3px;min-width:78%;box-shadow:0 2px 0 var(--stage)}
+  .map-node .node-stage-index{min-width:18px;height:18px;border-radius:5px;font-size:9px;box-shadow:none}
+  .map-node .node-label{font-size:clamp(8px,2.1vw,12px);line-height:1.15}
+  .map-node.treasure-node .node-label{font-size:8px;white-space:nowrap}
+  .map-node.treasure-node .node-label-wrap{padding:2px 4px;min-width:0}
+  .map-instructions{font-size:.83rem}
+  .stage-artwork{height:210px}
+  .answer-symbol{width:66px;height:66px}
+  .mascot{width:118px;height:142px}
+}
+@media(prefers-reduced-motion:reduce){.mascot{animation:none!important}}
+
+@media print{.map-screen{display:none!important}}
+
+/* آخر تحسينات الشهادة: توحيد عائلة الخط وارتفاع الأسطر على كامل المستند. */
+.cert, .cert .c-top, .cert .c-title, .cert .c-p,
+.cert .c-name, .cert .c-grade, .cert .c-achievement, .cert .c-foot{
+  font-family:'Noto Kufi Arabic','Cairo',Tahoma,Arial,sans-serif;
+}
+/* شاشة الدخول بعد حفظ بيانات الطالبة: العنوان والأزرار بوسط الشاشة دون نص جانبي. */
+.welcome-back{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px;}
+.welcome-back h1{max-width:92%;line-height:1.5;text-align:center;}
+.welcome-back .btn{width:min(92%,560px);margin:12px auto;}
+
+/* ====================================================================
+   خريطة رحلة الوعي — استجابة للشاشات المختلفة (نسخة محسّنة)
+   هذه القواعد خاصة بالخريطة فقط ولا تغيّر أسلوب صفحة الأسئلة.
+   ==================================================================== */
+
+/* أبعاد الخريطة تتبع الصورة الأصلية 1549×1015 دون تشويه.
+   نحصر العرض بما يناسب طول الشاشة كذلك حتى لا يظهر تمرير رأسي زائد. */
+body.map-mode{
+  min-height:100vh;
+  min-height:100dvh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  overflow-x:hidden;
+  background:linear-gradient(180deg,#fff3d6 0%,#ffeede 55%,#e8f7e9 100%) fixed;
+}
+body.map-mode #app{
+  box-sizing:border-box;
+  width:min(calc(100vw - 24px), calc((100dvh - 24px) * 1549 / 1015), 1460px);
+  max-width:none;
+  padding:0;
+  margin:0 auto;
+}
+body.map-mode .map-screen{
+  width:100%;
+  margin:0;
+  padding:0;
+}
+body.map-mode .illustrated-game-map{
+  display:block;
+  aspect-ratio:1549 / 1015;
+  width:100%;
+  height:auto;
+  margin:0 auto;
+  border:5px solid #fff;
+  border-radius:26px;
+  box-shadow:0 10px 34px rgba(60,49,95,.16);
+}
+body.map-mode .map-painted-background{
+  width:100%;height:100%;object-fit:fill;
+}
+/* إزالة أي عنصر أسفل الخريطة من النسخ القديمة في شاشة المدينة فقط. */
+body.map-mode .map-instructions{display:none!important}
+
+/* الأزرار تحتوي رسمًا واضحًا واسمًا؛ لا تتغير أحجامها بسبب شريط منفصل خارج الخريطة. */
+body.map-mode .map-node{gap:3px}
+body.map-mode .map-node .node-art-wrap{min-height:0}
+body.map-mode .map-node .node-label-wrap{
+  width:max-content;
+  min-width:0;
+  max-width:130%;
+  padding:6px 10px;
+  gap:6px;
+  border-radius:13px;
+  position:relative;
+  z-index:2;
+}
+body.map-mode .map-node .node-label{
+  font-size:clamp(10px,1.15vw,17px);
+  line-height:1.3;
+  text-align:center;
+  white-space:nowrap;
+}
+body.map-mode .map-node .node-stage-index{
+  flex:0 0 30px;
+  width:30px;
+  height:30px;
+  min-width:30px;
+  border-radius:9px;
+  font-size:14px;
+}
+/* تسمية الكنز داخل مساحة الزر نفسه؛ لا تسقط خارج أسفل الصورة. */
+body.map-mode .map-node.treasure-node .node-label-wrap{
+  position:absolute;
+  top:70%;
+  left:50%;
+  transform:translateX(-50%);
+  width:max-content;
+  min-width:0;
+  max-width:120%;
+  padding:7px 12px;
+  border-radius:14px;
+  z-index:3;
+}
+body.map-mode .map-node.treasure-node .node-label{
+  font-size:clamp(10px,1.1vw,16px);
+  white-space:nowrap;
+}
+
+/* الهاتف: الخريطة تتوسّط عرض الشاشة وتظل كاملة، مع تسميات مضغوطة واضحة. */
+@media(max-width:700px){
+  body.map-mode #app{
+    width:calc(100vw - 10px);
+  }
+  body.map-mode .illustrated-game-map{
+    border-width:3px;
+    border-radius:12px;
+  }
+  body.map-mode .map-node{gap:1px}
+  body.map-mode .map-node .node-label-wrap{
+    padding:2px 4px;
+    max-width:138%;
+    gap:2px;
+    border-width:1.2px;
+    border-radius:7px;
+    box-shadow:0 2px 0 var(--stage);
+  }
+  body.map-mode .map-node .node-label{
+    font-size:9px;
+    line-height:1.12;
+    white-space:normal;
+  }
+  body.map-mode .map-node .node-stage-index{
+    width:16px;min-width:16px;height:16px;flex:0 0 16px;
+    font-size:8px;border-radius:5px;
+  }
+  body.map-mode .map-node.treasure-node .node-label-wrap{
+    top:67%;
+    padding:2px 4px;
+    border-radius:6px;
+    max-width:150%;
+  }
+  body.map-mode .map-node.treasure-node .node-label{
+    font-size:9px;
+    line-height:1.08;
+  }
+  body.map-mode .map-star-count{
+    min-width:0;
+    width:18%;
+    height:8%;
+    right:3%; top:3%;
+    border-width:1px;
+    box-shadow:0 2px 0 #aa89d0;
+    font-size:clamp(9px,2vw,12px);
+    gap:3px;
+  }
+  body.map-mode .map-star-count .star-mark{font-size:1.35em}
+}
+/* الهواتف الأفقية: تأكد أن الخريطة لا تتجاوز ارتفاع النافذة. */
+@media(max-width:900px) and (orientation:landscape){
+  body.map-mode #app{
+    width:min(calc(100vw - 12px),calc((100dvh - 12px) * 1549 / 1015));
+  }
+}
+
+/* شاشة النهاية: الشهادة على اليمين والنموذج على اليسار. */
+#app:has(> .cert-wrap){max-width:1400px;}
+.cert-wrap{display:grid;grid-template-columns:minmax(0,1.85fr) minmax(300px,1fr);gap:24px;align-items:start;direction:rtl;}
+.cert-column{min-width:0;}
+.result-panel{min-width:0;width:100%;max-width:540px;margin:0 auto;text-align:right;}
+.form-preview{background:#fff;border:1px solid #e3d7ff;border-top:8px solid #7248b9;border-radius:18px;padding:20px;box-shadow:0 10px 30px rgba(124,92,255,.14);}
+.preview-tag{font-size:.82rem;font-weight:800;color:#7248b9;margin:0 0 4px;}
+.form-preview h2{text-align:right;color:#43266e;font-size:1.55rem;margin:0;}
+.form-school{font-size:.92rem;font-weight:700;margin:3px 0;color:#65517e;}
+.form-intro{font-size:.9rem;line-height:1.7;margin:8px 0 12px;color:#594c6d;}
+.form-preview label{font-size:.92rem;margin:12px 0 4px;}
+.form-preview input[type=text]{background:#faf7ff;border:1px solid #dfd1f2;border-radius:10px;font:700 1rem 'Cairo',Tahoma,Arial,sans-serif;padding:8px 12px;}
+.form-preview .btn{background:#7248b9;box-shadow:0 4px 0 #51328a;font-size:1rem;width:100%;padding:11px 12px;margin:16px 0 8px;text-align:center;}
+.form-link{display:block;text-decoration:none;}
+.preview-feedback:not(:empty){background:#eef8ec;border-radius:8px;padding:8px;color:#286237;}
+.welcome-back .result-panel{margin:12px auto;}
+@media(max-width:850px){
+  .cert-wrap{grid-template-columns:minmax(0,1fr);gap:20px;}
+  .cert-column{display:contents;}
+  .cert-column > .cert{order:1;}
+  .cert-wrap > .result-panel{order:2;max-width:540px;}
+  .cert-column > .noprint{order:3;}
+}
+@media print{
+  #app:has(> .cert-wrap){max-width:none!important;}
+  .cert-wrap{display:block!important;margin:0!important;}
+  .cert-column{display:block!important;width:297mm!important;}
+  .result-panel{display:none!important;}
+}
+
+/* تذييل تعريفي بسيط؛ لا يظهر في الشهادة المطبوعة. */
+.project-credit{width:100%;max-width:1000px;margin:0 auto;padding:0 14px 16px;text-align:center;color:#65517e;font-size:.82rem;line-height:1.6;overflow-wrap:anywhere;}
+.project-credit span{display:block;}
+.project-credit bdi{font-weight:800;color:#594190;}
+.project-credit .credit-ai{font-size:.76rem;color:#74658a;}
+body:not(.map-mode) #app{padding-bottom:18px;}
+body.map-mode .project-credit{flex:none;padding:8px 10px 4px;}
+body.map-mode #app{width:min(calc(100vw - 24px),calc((100dvh - 76px) * 1549 / 1015),1460px);}
+@media(max-width:700px){body.map-mode #app{width:calc(100vw - 10px);}}
+@media(max-width:900px) and (orientation:landscape){body.map-mode #app{width:min(calc(100vw - 12px),calc((100dvh - 64px) * 1549 / 1015));}}
+@media print{.project-credit{display:none!important;}body:not(.map-mode) #app{padding:0!important;}}
